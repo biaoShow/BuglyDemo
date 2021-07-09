@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.multidex.MultiDex;
@@ -18,7 +19,7 @@ import java.util.Locale;
 
 /**
  * 自定义ApplicationLike类.
- *
+ * <p>
  * 注意：这个类是Application的代理类，以前所有在Application的实现必须要全部拷贝到这里<br/>
  *
  * @author wenjiewu
@@ -29,8 +30,8 @@ public class SampleApplicationLike extends DefaultApplicationLike {
     public static final String TAG = "Tinker.SampleApplicationLike";
 
     public SampleApplicationLike(Application application, int tinkerFlags,
-            boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime,
-            long applicationStartMillisTime, Intent tinkerResultIntent) {
+                                 boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime,
+                                 long applicationStartMillisTime, Intent tinkerResultIntent) {
         super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime,
                 applicationStartMillisTime, tinkerResultIntent);
     }
@@ -46,12 +47,13 @@ public class SampleApplicationLike extends DefaultApplicationLike {
         // 设置是否自动合成补丁，默认为true
         Beta.canAutoPatch = true;
         // 设置是否提示用户重启，默认为false
-        Beta.canNotifyUserRestart = true;
+        Beta.canNotifyUserRestart = false;
         // 补丁回调接口
         Beta.betaPatchListener = new BetaPatchListener() {
             @Override
             public void onPatchReceived(String patchFile) {
                 Toast.makeText(getApplication(), "补丁下载地址" + patchFile, Toast.LENGTH_SHORT).show();
+                Log.e("SampleApplicationLike", "补丁下载地址" + patchFile);
             }
 
             @Override
@@ -66,22 +68,26 @@ public class SampleApplicationLike extends DefaultApplicationLike {
             @Override
             public void onDownloadSuccess(String msg) {
                 Toast.makeText(getApplication(), "补丁下载成功", Toast.LENGTH_SHORT).show();
+                Log.e("SampleApplicationLike", "补丁下载成功");
             }
 
             @Override
             public void onDownloadFailure(String msg) {
                 Toast.makeText(getApplication(), "补丁下载失败", Toast.LENGTH_SHORT).show();
+                Log.e("SampleApplicationLike", "补丁下载失败");
 
             }
 
             @Override
             public void onApplySuccess(String msg) {
                 Toast.makeText(getApplication(), "补丁应用成功", Toast.LENGTH_SHORT).show();
+                Log.e("SampleApplicationLike", "补丁应用成功");
             }
 
             @Override
             public void onApplyFailure(String msg) {
                 Toast.makeText(getApplication(), "补丁应用失败", Toast.LENGTH_SHORT).show();
+                Log.e("SampleApplicationLike", "补丁应用失败");
             }
 
             @Override

@@ -24,3 +24,5 @@
 
 # 避免影响升级功能，需要keep住support包的类
 -keep class android.support.**{*;}
+
+-dontoptimize
