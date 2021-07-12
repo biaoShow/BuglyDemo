@@ -5,7 +5,7 @@ def bakPath = file("${buildDir}/bakApk/")
 /**
  * 此处填写每次构建生成的基准包目录
  */
-def baseApkDir = "app-0709-16-30-10"
+def baseApkDir = "app-0709-20-13-45"
 
 /**
  * 对于插件各参数的详细解析请参考，如果没有特殊需求下面的参数都可以不用更改；如果apk需要加固等可以参考具体描述设置参数
@@ -29,7 +29,7 @@ tinkerSupport {
     // 编译补丁包时，必需指定基线版本的apk，默认值为空
     // 如果为空，则表示不是进行补丁包的编译
     // @{link tinkerPatch.oldApk }
-    baseApk =  "${bakPath}/${baseApkDir}/app-release.apk"
+    baseApk = "${bakPath}/${baseApkDir}/app-release.apk"
 
     // 对应tinker插件applyMapping
     baseApkProguardMapping = "${bakPath}/${baseApkDir}/app-release-mapping.txt"
@@ -67,6 +67,7 @@ tinkerPatch {
 
     res {
         pattern = ["res/*", "r/*", "assets/*", "resources.arsc", "AndroidManifest.xml"]
+        //忽略改变的资源
         ignoreChange = []
         largeModSize = 100
     }
@@ -80,7 +81,9 @@ tinkerPatch {
     buildConfig {
         keepDexApply = false
         //tinkerId = "1.0.1-patch"
-        applyMapping = "${bakPath}/${baseApkDir}/app-debug-mapping.txt" //  可选，设置mapping文件，建议保持旧apk的proguard混淆方式
-        applyResourceMapping = "${bakPath}/${baseApkDir}/app-debug-R.txt" // 可选，设置R.txt文件，通过旧apk文件保持ResId的分配
+        applyMapping = "${bakPath}/${baseApkDir}/app-debug-mapping.txt"
+        //  可选，设置mapping文件，建议保持旧apk的proguard混淆方式
+        applyResourceMapping = "${bakPath}/${baseApkDir}/app-debug-R.txt"
+        // 可选，设置R.txt文件，通过旧apk文件保持ResId的分配
     }
 }

@@ -4,9 +4,6 @@ import android.util.Log;
 
 /**
  * 测试bug类.
- *
- * @author devilwwj
- * @since 2016/10/25
  */
 public class BugClass {
 
